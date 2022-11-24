@@ -1,37 +1,21 @@
 use std::io;
 
 fn main() {
+    let mut print = false;
     loop {
         let mut line = String::new();
         io::stdin()
             .read_line(&mut line)
             .expect("Failed to read number a");
-        match line.trim() {
-            "<body>" => break,
-            _ => continue,
-        }
-    }
 
-    loop {
-        let mut line = String::new();
-        io::stdin()
-            .read_line(&mut line)
-            .expect("Failed to read number a");
-        line.pop();
-
-        match line.contains("</body>") {
-            true => break,
-            false => println!("{}", line),
-        }
-    }
-
-    loop {
-        let mut line = String::new();
-        io::stdin()
-            .read_line(&mut line)
-            .expect("Failed to read number a");
-        match line.trim() {
-            "" => break,
+        match (line.contains("<body>"), line.contains("</body>"), print) {
+            (true, false, false) => print = true,
+            (false, true, true) => print = false,
+            (false, false, true) => {
+                line.pop();
+                println!("{}", line);
+            }
+            _ if line.trim() == "" => break,
             _ => continue,
         }
     }
