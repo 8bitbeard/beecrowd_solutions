@@ -23,14 +23,13 @@ fn main() {
         for (pos, e) in template.iter().enumerate() {
             let joined = matrix[pos]
                 .iter()
-                .map(|x| format!("  {value}", value = if x > e { e } else { x }))
+                .map(|x| format!("{:>3}", if x > e { e } else { x }))
                 .collect::<Vec<String>>()
                 .join(" ");
             println!("{}", joined);
         }
          println!("");
     }
-    println!("");
 }
 
 fn build_line(size: &i32) -> Vec<i32> {
