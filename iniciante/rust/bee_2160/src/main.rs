@@ -1,0 +1,17 @@
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read input");
+    input.pop();
+
+    println!(
+        "{}",
+        match input.chars().count() {
+            x if x <= 80 => "YES",
+            _ => "NO",
+        }
+    )
+}
