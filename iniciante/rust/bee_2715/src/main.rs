@@ -15,38 +15,34 @@ fn main() {
         io::stdin()
             .read_line(&mut values)
             .expect("Failed to read the line");
-        let output: i32 = match number {
-            1 => values.trim().parse::<i32>().unwrap(),
-            _ => {
-                let v: Vec<i32> = values
-                .trim()
-                .split(' ')
-				.filter(|x| !x.is_empty())
-                .map(|x| x.parse::<i32>().unwrap())
-                .collect();
-                compute_diff(&v)
-            }
+        let values: Vec<i64> = values
+            .trim()
+            .split(' ')
+            .filter(|x| !x.is_empty())
+            .map(|x| x.parse::<i64>().unwrap())
+            .collect();
+
+        let output = match number {
+            1 => values[0],
+            _ => compute_diff(&values),
         };
 
         println!("{}", output);
     }
 }
 
-fn compute_diff(v: &Vec<i32>) -> i32 {
-    let mut sum_a = v[0];
-    let mut sum_b = v[1..].iter().sum::<i32>();
-    let mut diff = (sum_b - sum_a).abs();
-
+fn compute_diff(v: &Vec<i64>) -> i64 {
+    let mut a = v[0];
+    let mut b = v[1..].iter().sum::<i64>();
+    let mut diff = (a - b).abs();
     for i in 1..v.len() {
-        sum_b -= v[i];
-        sum_a += v[i];
-        let d = (sum_b - sum_a).abs();
-        if d >= diff {
+        a += v[i];
+        b -= v[i];
+        let d = (a - b).abs();
+        if d > diff {
             break
         }
         diff = d;
     }
-
     diff
-
 }
